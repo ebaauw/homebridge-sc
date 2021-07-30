@@ -1,0 +1,71 @@
+{
+  "pluginAlias": "SC",
+  "pluginType": "platform",
+  "singular": true,
+  "headerDisplay": "Homebridge plugin for SOMA Connect",
+  "footerDisplay": "",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "Plugin name as displayed in the Homebridge log.",
+        "type": "string",
+        "required": true,
+        "default": "Soma"
+      },
+      "hosts": {
+        "title": "Host",
+        "type": "array",
+        "required": true,
+        "items": {
+          "title": "Host",
+          "description": "Hostname and, optionally, port of the SOMA Connect.",
+          "type": "string"
+        }
+      },
+      "timeout":
+      {
+        "description": "The timeout in seconds to wait for a response from a SOMA Connect.  Default: 15.",
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 60
+      }
+    }
+  },
+  "form": [
+    "name",
+    {
+      "type": "help",
+      "helpvalue": "Hosts"
+    },
+    {
+      "nodescription": true,
+      "notitle": true,
+      "key": "hosts",
+      "type": "array",
+      "items": [
+        {
+          "type": "div",
+          "displayFlex": true,
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "hosts[]",
+              "required": true,
+              "flex": "1 1 50px"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fieldset",
+      "expandable": true,
+      "title": "Advanced Settings",
+      "description": "Don't change these, unless you understand what you're doing.",
+      "items": [
+        "timeout"
+      ]
+    }
+  ]
+}

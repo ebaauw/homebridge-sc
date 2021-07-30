@@ -1,0 +1,44 @@
+{
+  "name": "homebridge-sc",
+  "description": "Homebridge plugin for SOMA Connect",
+  "displayName": "Homebridge SC",
+  "author": "Erik Baauw",
+  "license": "Apache-2.0",
+  "version": "0.0.0",
+  "keywords": [
+    "homebridge-plugin",
+    "homekit",
+    "soma",
+    "soma-connect",
+    "shade",
+    "blind",
+    "tilt"
+  ],
+  "main": "index.js",
+  "bin": {
+    "nb": "cli/nb.js"
+  },
+  "engines": {
+    "homebridge": "^1.3.4",
+    "node": "^14.17.2"
+  },
+  "dependencies": {
+    "homebridge-lib": "~5.1.9"
+  },
+  "scripts": {
+    "prepare": "standard",
+    "test": "standard && echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ebaauw/homebridge-sc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ebaauw/homebridge-sc/issues"
+  },
+  "homepage": "https://github.com/ebaauw/homebridge-sc#readme",
+  "funding": {
+    "type": "paypal",
+    "url": "https://www.paypal.me/ebaauw/EUR"
+  }
+}
