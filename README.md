@@ -56,7 +56,7 @@ It looks like `soma-connect` opens the mDNS port exclusively, so running Homebri
 ### Work in Progress
 Note that this plugin is still under development.
 In particular, support for the
-[Soma Smart Shades v2](https://eu.somasmarthome.com)
+[SOMA Smart Shades v2](https://eu.somasmarthome.com)
 is missing, as I don't have that device.
 
 ### Configuration
