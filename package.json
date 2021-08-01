@@ -15,9 +15,6 @@
     "tilt"
   ],
   "main": "index.js",
-  "bin": {
-    "nb": "cli/nb.js"
-  },
   "engines": {
     "homebridge": "^1.3.4",
     "node": "^14.17.4"
