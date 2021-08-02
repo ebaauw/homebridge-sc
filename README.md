@@ -19,8 +19,9 @@
 Copyright © 2021 Erik Baauw. All rights reserved.
 
 This [Homebridge](https://github.com/homebridge/homebridge) plugin exposes
-[SOMA Tilt v2](https://eu.somasmarthome.com/pages/smart-tilt) devices
-connected to a [SOMA Connect](https://eu.somasmarthome.com/products/soma-connect-blinds-control-for-amazon-alexa-apple-homekit-google-home) bridge
+[SOMA Smart Shades 2](https://eu.somasmarthome.com) and
+[SOMA Tilt 2](https://eu.somasmarthome.com/pages/smart-tilt) devices, connected to a
+[SOMA Connect](https://eu.somasmarthome.com/products/soma-connect-blinds-control-for-amazon-alexa-apple-homekit-google-home),
 to Apple's [HomeKit](https://www.apple.com/ios/home/).
 
 This plugin does not depend on Bluetooth Low Energy (BLE) support on the server running Homebridge.
@@ -41,7 +42,8 @@ I hope to feedback my findings to Wazombi Labs for inclusion in the SOMA Connect
 SOMA Connect is available as a Raspberry Pi image [here](https://support.somasmarthome.com/hc/en-us/articles/360035521234-Install-SOMA-Connect-software).
 It can also be written to an SD card using the [Raspberry Pi Imager](https://www.raspberrypi.org/software/).
 The image provides the light version of PiOS, without the graphical environment.
-I'm currently running it on a Pi Zero W.
+I'm now running it on a Pi 3B+, connected to the network wired over Ethernet,
+after some stability issues using a Pi Zero W, over WiFi.
 
 SSH access is disabled by default, but easily enabled by placing an `ssh` file in the boot partition of the SD card, see [SSH](https://www.raspberrypi.org/documentation/remote-access/ssh/).
 That way, you don't need to connect a monitor and keyboard.
@@ -55,9 +57,10 @@ It looks like `soma-connect` opens the mDNS port exclusively, so running Homebri
 
 ### Work in Progress
 Note that this plugin is still under development.
-In particular, support for the
-[SOMA Smart Shades v2](https://eu.somasmarthome.com)
-is missing, as I don't have that device.
+
+### Command-Line Tool
+Homebridge SC include a command-line tool, `sc`, to interact with the SOMA Connect from the command line.
+It takes a `-h` or `--help` argument to provide a brief overview of its functionality and command-line arguments.
 
 ### Configuration
 In Homebridge's `config.json` you need to specify Homebridge SC as a platform
