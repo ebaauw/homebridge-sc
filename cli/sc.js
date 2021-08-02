@@ -272,21 +272,27 @@ class Main extends homebridgeLib.CommandLineTool {
     } else if (!homebridgeLib.OptionParser.patterns.mac.test(id)) {
       throw new UsageError(`${id}: invalid shade mac address`)
     }
+    return id.toLowerCase()
     // TODO check that id is actually connected to SOMA Connect
   }
 
   async list (...args) {
     const parser = new homebridgeLib.CommandLineParser(packageJson)
-    const clargs = {
-      options: { sortKeys: true }
-    }
     parser
       .help('h', 'help', this.help)
       .parse(...args)
     this.client = this.createScClient()
     const response = await this.client.listDevices()
-    const jsonFormatter = new homebridgeLib.JsonFormatter(clargs.options)
-    this.print(jsonFormatter.stringify(response.shades))
+    const jsonFormatter = new homebridgeLib.JsonFormatter()
+    this.print(jsonFormatter.stringify(response.shades.map((shade) => {
+      return {
+        id: shade.mac.toUpperCase(),
+        model: ScClient.model(shade.type),
+        version: response.version, // FIXME: this is the SOMA Connect version
+        name: shade.name,
+        supportsUp: ScClient.supportsUp(shade.type)
+      }
+    })))
   }
 
   async position (...args) {
@@ -297,9 +303,7 @@ class Main extends homebridgeLib.CommandLineTool {
     parser
       .help('h', 'help', this.help)
       .flag('m', 'morningMode', () => { morningMode = 1 })
-      .option('S', 'shade', (value) => {
-        id = value.toLowerCase()
-      })
+      .option('S', 'shade', (value) => { id = value })
       .remaining((list) => {
         if (list.length > 1) {
           throw new UsageError('too many arguments')
@@ -312,7 +316,7 @@ class Main extends homebridgeLib.CommandLineTool {
       })
       .parse(...args)
     this.client = this.createScClient()
-    this.checkId(id)
+    id = this.checkId(id)
     if (targetPosition != null) {
       await this.client.setShadePosition(id, targetPosition, morningMode)
     }
@@ -326,12 +330,10 @@ class Main extends homebridgeLib.CommandLineTool {
     parser
       .help('h', 'help', this.help)
       .flag('m', 'morningMode', () => { morningMode = 1 })
-      .option('S', 'shade', (value) => {
-        id = value.toLowerCase()
-      })
+      .option('S', 'shade', (value) => { id = value })
       .parse(...args)
     this.client = this.createScClient()
-    this.checkId(id)
+    id = this.checkId(id)
     await this.client.openShade(id, morningMode)
     this.print('' + await this.client.getShadePosition(id))
   }
@@ -344,9 +346,7 @@ class Main extends homebridgeLib.CommandLineTool {
     parser
       .help('h', 'help', this.help)
       .flag('m', 'morningMode', () => { morningMode = 1 })
-      .option('S', 'shade', (value) => {
-        id = value.toLowerCase()
-      })
+      .option('S', 'shade', (value) => { id = value })
       .remaining((list) => {
         if (list.length > 1) {
           throw new UsageError('too many arguments')
@@ -361,12 +361,8 @@ class Main extends homebridgeLib.CommandLineTool {
       })
       .parse(...args)
     this.client = this.createScClient()
-    this.checkId(id)
-    if (up) {
-      await this.client.closeShadeUp(id, morningMode)
-    } else {
-      await this.client.closeShadeDown(id, morningMode)
-    }
+    id = this.checkId(id)
+    await this.client.closeShade(id, up, morningMode)
     this.print('' + await this.client.getShadePosition(id))
   }
 
@@ -375,12 +371,10 @@ class Main extends homebridgeLib.CommandLineTool {
     let id = process.env.SC_SHADE
     parser
       .help('h', 'help', this.help)
-      .option('S', 'shade', (value) => {
-        id = value.toLowerCase()
-      })
+      .option('S', 'shade', (value) => { id = value })
       .parse(...args)
     this.client = this.createScClient()
-    this.checkId(id)
+    id = this.checkId(id)
     await this.client.stopShade(id)
     this.print('' + await this.client.getShadePosition(id))
   }
@@ -390,12 +384,10 @@ class Main extends homebridgeLib.CommandLineTool {
     let id = process.env.SC_SHADE
     parser
       .help('h', 'help', this.help)
-      .option('S', 'shade', (value) => {
-        id = value.toLowerCase()
-      })
+      .option('S', 'shade', (value) => { id = value })
       .parse(...args)
     this.client = this.createScClient()
-    this.checkId(id)
+    id = this.checkId(id)
     this.print('' + await this.client.getBatteryLevel(id))
   }
 }
