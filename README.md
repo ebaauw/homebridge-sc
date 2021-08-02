@@ -7,7 +7,7 @@
 [![Downloads](https://img.shields.io/npm/dt/homebridge-sc.svg)](https://www.npmjs.com/package/homebridge-sc)
 [![Version](https://img.shields.io/npm/v/homebridge-sc.svg)](https://www.npmjs.com/package/homebridge-sc)
 [![Homebridge Discord](https://img.shields.io/discord/432663330281226270?color=728ED5&logo=discord&label=discord)](https://discord.gg/yGvADWt)
-<!-- [![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins) -->
+[![verified-by-homebridge](https://badgen.net/badge/homebridge/verified/purple)](https://github.com/homebridge/homebridge/wiki/Verified-Plugins)
 
 [![GitHub issues](https://img.shields.io/github/issues/ebaauw/homebridge-sc)](https://github.com/ebaauw/homebridge-sc/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/ebaauw/homebridge-sc)](https://github.com/ebaauw/homebridge-sc/pulls)
