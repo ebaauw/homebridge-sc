@@ -16,7 +16,7 @@
 </span>
 
 ## Homebridge plugin for SOMA Connect
-Copyright © 2021 Erik Baauw. All rights reserved.
+Copyright © 2021-2022 Erik Baauw. All rights reserved.
 
 This [Homebridge](https://github.com/homebridge/homebridge) plugin exposes
 [SOMA Smart Shades 2](https://eu.somasmarthome.com) and
