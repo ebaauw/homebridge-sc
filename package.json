@@ -19,12 +19,12 @@
     "sc": "cli/sc.js"
   },
   "engines": {
-    "homebridge": "^1.3.8",
+    "homebridge": "^1.3.9",
     "node": "^16.13.1",
     "soma-connect": "2.3.0"
   },
   "dependencies": {
-    "homebridge-lib": "~5.1.22"
+    "homebridge-lib": "~5.1.23"
   },
   "scripts": {
     "prepare": "standard && rm -rf out && jsdoc -c jsdoc.json",
