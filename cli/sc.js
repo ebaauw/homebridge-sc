@@ -21,7 +21,8 @@ const usage = {
   open: `${b('open')} [${b('-hm')}] [${b('-S')} ${u('shade')}]`,
   close: `${b('close')} [${b('-hm')}] [${b('-S')} ${u('shade')}] [${b('down')}|${b('up')}]`,
   stop: `${b('stop')} [${b('-h')}] [${b('-S')} ${u('shade')}]`,
-  battery: `${b('battery')} [${b('-h')}] [${b('-S')} ${u('shade')}]`
+  battery: `${b('battery')} [${b('-h')}] [${b('-S')} ${u('shade')}]`,
+  lightlevel: `${b('lightlevel')} [${b('-h')}] [${b('-S')} ${u('shade')}]`
 }
 
 const description = {
@@ -31,7 +32,8 @@ const description = {
   open: 'Open shade.',
   close: 'Close shade.',
   stop: 'Stop shade.',
-  battery: 'Get shade battery level.'
+  battery: 'Get shade battery level.',
+  lightlevel: 'Get shade solar panel light level.'
 }
 
 const help = {
@@ -74,6 +76,9 @@ Commands:
 
   ${usage.battery}
   ${description.battery}
+
+  ${usage.lightlevel}
+  ${description.lightlevel}
 
 For more help, issue: ${b('sc')} ${u('command')} ${b('-h')}`,
   list: `${description.list}
@@ -169,7 +174,19 @@ Parameters:
   ${b('-S')} ${u('shade')}, ${b('--shade=')}${u('shade')}
   Control shade with mac ${u('shade')}
   Use ${b('sc list')} for an overview of connected shades and their mac.
-  Default shade can be set in the ${b('SC_SHADE')} environment variable..`
+  Default shade can be set in the ${b('SC_SHADE')} environment variable.`,
+  lightlevel: `${description.lightlevel}
+
+Usage: ${b('sc')} ${usage.lightlevel}
+
+Parameters:
+  ${b('-h')}, ${b('--help')}
+  Print this help and exit.
+
+  ${b('-S')} ${u('shade')}, ${b('--shade=')}${u('shade')}
+  Control shade with mac ${u('shade')}
+  Use ${b('sc list')} for an overview of connected shades and their mac.
+  Default shade can be set in the ${b('SC_SHADE')} environment variable.`
 }
 
 class Main extends homebridgeLib.CommandLineTool {
@@ -287,10 +304,10 @@ class Main extends homebridgeLib.CommandLineTool {
     this.print(jsonFormatter.stringify(response.shades.map((shade) => {
       return {
         id: shade.mac.toUpperCase(),
-        model: ScClient.model(shade.type),
+        model: ScClient.model(shade),
         version: response.version, // FIXME: this is the SOMA Connect version
         name: shade.name,
-        supportsUp: ScClient.supportsUp(shade.type)
+        supportsUp: ScClient.supportsUp(shade)
       }
     })))
   }
@@ -389,6 +406,18 @@ class Main extends homebridgeLib.CommandLineTool {
     this.client = this.createScClient()
     id = this.checkId(id)
     this.print('' + await this.client.getBatteryLevel(id))
+  }
+
+  async lightlevel (...args) {
+    const parser = new homebridgeLib.CommandLineParser(packageJson)
+    let id = process.env.SC_SHADE
+    parser
+      .help('h', 'help', this.help)
+      .option('S', 'shade', (value) => { id = value })
+      .parse(...args)
+    this.client = this.createScClient()
+    id = this.checkId(id)
+    this.print('' + await this.client.getLightLevel(id))
   }
 }
 
