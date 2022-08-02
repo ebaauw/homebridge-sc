@@ -14,13 +14,32 @@
         "default": "Soma"
       },
       "hosts": {
-        "title": "Host",
+        "title": "SOMA Connects",
+        "notitle": true,
         "type": "array",
         "required": true,
         "items": {
-          "title": "Host",
-          "description": "Hostname and, optionally, port of the SOMA Connect.",
-          "type": "string"
+          "description": "<b>SOMA Connect</b>",
+          "type": "object",
+          "properties": {
+            "host": {
+              "title": "Host",
+              "description": "Hostname and, optionally, port of the SOMA Connect.",
+              "type": "string",
+              "required": true
+            },
+            "shades": {
+              "title": "Shades",
+              "notitle": true,
+              "description": "Whitelisted shades (default: all).",
+              "type": "array",
+              "items": {
+                "title": "Shade",
+                "description": "MAC address of the shade.",
+                "type": "string"
+              }
+            }
+          }
         }
       },
       "timeout": {
@@ -30,41 +49,5 @@
         "maximum": 60
       }
     }
-  },
-  "form": [
-    "name",
-    {
-      "type": "help",
-      "helpvalue": "Hosts"
-    },
-    {
-      "nodescription": true,
-      "notitle": true,
-      "key": "hosts",
-      "type": "array",
-      "items": [
-        {
-          "type": "div",
-          "displayFlex": true,
-          "flex-direction": "row",
-          "items": [
-            {
-              "key": "hosts[]",
-              "required": true,
-              "flex": "1 1 50px"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "fieldset",
-      "expandable": true,
-      "title": "Advanced Settings",
-      "description": "Don't change these, unless you understand what you're doing.",
-      "items": [
-        "timeout"
-      ]
-    }
-  ]
+  }
 }
