@@ -32,8 +32,10 @@ Note that this API is currently in beta.
 Note that the SOMA Connect provides native Homebridge support.
 However, I find that support lacking:
 - It doesn't expose the battery;
-- It exposes _Close Upwards_ and _Morning Mode_ as write-only characteristics, which most HomeKit apps don't like.
-- It doesn't report in which direction ("up" or "down") the blinds are closed.
+- It doesn't expose the solar panel light level;
+- It exposes _Close Upwards_ and _Morning Mode_ as write-only characteristics, which most HomeKit apps don't like;
+- It doesn't report in which direction ("up" or "down") the blinds are closed;
+- It doesn't support specifying which devices to expose, which might be needed when you have multiple SOMA Connect servers for better BLE signal coverage, but some devices are seen by both Connect servers.
 
 This plugin is my proof-of-concept how better to expose the SOMA Tilt.
 I hope to feedback my findings to Wazombi Labs for inclusion in the SOMA Connect.
@@ -45,7 +47,7 @@ The image provides the light version of PiOS, without the graphical environment.
 I'm now running it on a Pi 3B+, connected to the network wired over Ethernet,
 after some stability issues using a Pi Zero W, over WiFi.
 
-SSH access is disabled by default, but easily enabled by placing an `ssh` file in the boot partition of the SD card, see [SSH](https://www.raspberrypi.org/documentation/remote-access/ssh/).
+SSH access is disabled by default, but easily enabled by placing an `ssh` file in the boot partition of the SD card, see [Remote Access](https://www.raspberrypi.com/documentation/computers/remote-access.html#ssh).
 That way, you don't need to connect a monitor and keyboard.
 After installing `pigpio`, the Pi can be monitored remotely by [Homebridge RPi](https://github.com/ebaauw/homebridge-rpi).
 
@@ -54,9 +56,6 @@ They seem to have packaged NodeJS, HAP-NodeJS and the SOMA-specific Javascript c
 There doesn't seem to be an easy way to enhance their Javascript code.
 The executable runs as `root`, probably to interact with the Bluetooth Low Energy hardware.
 It looks like `soma-connect` opens the mDNS port exclusively, so running Homebridge on the same Raspberry Pi as SOMA Connect doesn't seem feasible.
-
-### Work in Progress
-Note that this plugin is still under development.
 
 ### Command-Line Tool
 Homebridge SC include a command-line tool, `sc`, to interact with the SOMA Connect from the command line.
@@ -70,7 +69,35 @@ plugin, and provide the IP address of the SOMA Connect.
   "platforms": [
     {
       "platform": "SC",
-      "hosts": ["192.168.x.x"]
+      "hosts": [
+        {
+          "host": "192.168.x.x"
+        }        
+      ]
     }
   ]
+```
+
+If you have multiple SOMA Connect servers, for better Bluetooth signal coverage, you might need to whitelist which devices are exposed through which SOMA Connect:
+```json
+"platforms": [
+  {
+    "platform": "SC",
+    "hosts": [
+      {
+        "host": "192.168.x.x",
+        "shades": [
+          "AA:AA:AA:AA:AA:AA",
+          "BB:BB:BB:BB:BB:BB"
+        ]
+      },
+      {
+        "host": "192.168.x.y",
+        "shades": [
+          "CC:CC:CC:CC:CC:CC"
+        ]
+      }      
+    ]
+  }
+]
 ```
