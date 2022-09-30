@@ -20,12 +20,11 @@
   },
   "engines": {
     "homebridge": "^1.5.0",
-    "node": "^16.17.0",
+    "node": "^16.17.1",
     "soma-connect": "2.3.1"
   },
   "dependencies": {
-    "homebridge-lib": "~5.6.5",
-    "semver": "^7.3.7"
+    "homebridge-lib": "~5.6.8"
   },
   "scripts": {
     "prepare": "standard && rm -rf out && jsdoc -c jsdoc.json",
@@ -39,8 +38,13 @@
     "url": "https://github.com/ebaauw/homebridge-sc/issues"
   },
   "homepage": "https://github.com/ebaauw/homebridge-sc#readme",
-  "funding": {
-    "type": "paypal",
-    "url": "https://www.paypal.me/ebaauw/EUR"
-  }
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/ebaauw"
+    }, {
+      "type": "paypal",
+      "url": "https://www.paypal.me/ebaauw/EUR"
+    }
+  ]
 }
