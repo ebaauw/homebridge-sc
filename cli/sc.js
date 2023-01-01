@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // homebridge-zp/cli/sc.js
-// Copyright © 2021-2022 Erik Baauw. All rights reserved.
+// Copyright © 2021-2023 Erik Baauw. All rights reserved.
 //
 // Homebridge plug-in for SOMA Connect.
 
