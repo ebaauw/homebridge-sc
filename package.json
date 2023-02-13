@@ -21,7 +21,8 @@
   "engines": {
     "homebridge": "^1.6.0",
     "node": "^18.14.0",
-    "soma-connect": "2.3.1"
+    "soma-connect": "2.3.1",
+    "soma-u1": "3.0.4"
   },
   "dependencies": {
     "homebridge-lib": "~6.3.8"
