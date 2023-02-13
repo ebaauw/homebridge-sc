@@ -283,14 +283,20 @@ class Main extends homebridgeLib.CommandLineTool {
     return client
   }
 
-  checkId (id) {
+  async checkId (id) {
     if (id == null || id === '') {
       throw new UsageError(`Missing shade mac address.  Set ${b('SC_SHADE')} or specify ${b('-S')}.`)
     } else if (!homebridgeLib.OptionParser.patterns.mac.test(id)) {
       throw new UsageError(`${id}: invalid shade mac address`)
     }
-    return id.toLowerCase()
-    // TODO check that id is actually connected to SOMA Connect
+    id = id.toLowerCase()
+    const response = await this.client.listDevices()
+    for (const shade of response.shades) {
+      if (shade.mac === id) {
+        return id
+      }
+    }
+    throw new UsageError(`${id}: unknown shade`)
   }
 
   async list (...args) {
@@ -333,7 +339,7 @@ class Main extends homebridgeLib.CommandLineTool {
       })
       .parse(...args)
     this.client = this.createScClient()
-    id = this.checkId(id)
+    id = await this.checkId(id)
     if (targetPosition != null) {
       await this.client.setShadePosition(id, targetPosition, morningMode)
     }
@@ -350,7 +356,7 @@ class Main extends homebridgeLib.CommandLineTool {
       .option('S', 'shade', (value) => { id = value })
       .parse(...args)
     this.client = this.createScClient()
-    id = this.checkId(id)
+    id = await this.checkId(id)
     await this.client.openShade(id, morningMode)
     this.print('' + await this.client.getShadePosition(id))
   }
@@ -378,7 +384,7 @@ class Main extends homebridgeLib.CommandLineTool {
       })
       .parse(...args)
     this.client = this.createScClient()
-    id = this.checkId(id)
+    id = await this.checkId(id)
     await this.client.closeShade(id, up, morningMode)
     this.print('' + await this.client.getShadePosition(id))
   }
@@ -391,7 +397,7 @@ class Main extends homebridgeLib.CommandLineTool {
       .option('S', 'shade', (value) => { id = value })
       .parse(...args)
     this.client = this.createScClient()
-    id = this.checkId(id)
+    id = await this.checkId(id)
     await this.client.stopShade(id)
     this.print('' + await this.client.getShadePosition(id))
   }
@@ -404,7 +410,7 @@ class Main extends homebridgeLib.CommandLineTool {
       .option('S', 'shade', (value) => { id = value })
       .parse(...args)
     this.client = this.createScClient()
-    id = this.checkId(id)
+    id = await this.checkId(id)
     this.print('' + await this.client.getBatteryLevel(id))
   }
 
@@ -416,7 +422,7 @@ class Main extends homebridgeLib.CommandLineTool {
       .option('S', 'shade', (value) => { id = value })
       .parse(...args)
     this.client = this.createScClient()
-    id = this.checkId(id)
+    id = await this.checkId(id)
     this.print('' + await this.client.getLightLevel(id))
   }
 }
