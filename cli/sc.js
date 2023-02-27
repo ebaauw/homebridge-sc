@@ -217,7 +217,9 @@ class Main extends homebridgeLib.CommandLineTool {
       .help('h', 'help', help.sc)
       .version('V', 'version')
       .flag('D', 'debug', () => {
-        if (this.debugEnabled) {
+        if (this.vdebugEnabled) {
+          this.setOptions({ vvdebug: true })
+        } else if (this.debugEnabled) {
           this.setOptions({ vdebug: true })
         } else {
           this.setOptions({ debug: true, chalk: true })
@@ -272,6 +274,7 @@ class Main extends homebridgeLib.CommandLineTool {
         )
       })
       .on('response', (response) => {
+        this.vvdebug('request %s: response: %j', response.request.id, response)
         this.vdebug(
           'request %d: response: %j', response.request.id, response.body
         )
