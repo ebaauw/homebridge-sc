@@ -18,6 +18,8 @@
 ## Homebridge plugin for SOMA Connect
 Copyright © 2021-2023 Erik Baauw. All rights reserved.
 
+*Note: This plugin is no longer being maintained.*
+
 This [Homebridge](https://github.com/homebridge/homebridge) plugin exposes
 [SOMA Smart Shades 2](https://eu.somasmarthome.com) and
 [SOMA Tilt 2](https://eu.somasmarthome.com/pages/smart-tilt) devices, connected to a
